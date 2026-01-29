@@ -1,19 +1,19 @@
 class Person:
     people = {}
 
-    def __init__(self, name: str, age: int) -> str:
+    def __init__(self, name: str, age: int) -> None:
         self.name = name
         self.age = age
         Person.people[name] = self
 
 
 def create_person_list(people: list) -> list:
-    for person_dict in people:
-        Person(person_dict["name"], person_dict["age"])
-    for person_dict in people:
-        person_obj = Person.people[person_dict["name"]]  # Находим объект
-        if "wife" in person_dict and person_dict["wife"] is not None:
-            person_obj.wife = Person.people[person_dict["wife"]]
-        if "husband" in person_dict and person_dict["husband"] is not None:
-            person_obj.husband = Person.people[person_dict["husband"]]
-    return [Person.people[person_dict["name"]] for person_dict in people]
+    persons_list = []
+    for person in people:
+        persons_list.append(Person(person["name"], person["age"]))
+    for i in range(len(people)):
+        if "wife" in people[i] and people[i]["wife"] is not None:
+            persons_list[i].wife = Person.people[people[i]["wife"]]
+        if "husband" in people[i] and people[i]["husband"] is not None:
+            persons_list[i].husband = Person.people[people[i]["husband"]]
+    return persons_list
